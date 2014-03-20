@@ -16,4 +16,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		puppet.manifest_file = "fortrabbit.pp"
 		puppet.options = ["--templatedir", "/vagrant/templates"]
 	end
+	# synced folder settings
+	config.vm.synced_folder "web", "/var/www/web"
 end
