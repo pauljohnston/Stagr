@@ -42,14 +42,10 @@ LOGO;
 		//Setup Apache options
 		createSite($fname, $email);
 
-		//Setup Git Repos
-		createGit($fname);
-
-		echo "\n[36mStaging Enviroment Setup !!![0m\n\n";
+		echo "\n[36mFortrabbit Local Enviroment Setup !!![0m\n\n";
 
 		//Display Info for setting up local computer
 		printHostsInfo($fname);
-		printGitInfo($fname);
 		printMySQLInfo($fname);
 
 		echo "\nYou are now ready to push, Thank you for reading [36mNetTuts+[0m\n\n";
@@ -173,57 +169,6 @@ LOGO;
 		echo "[36mOK[0m\n";
 	}
 
-	function createGit($name){
-		echo "\n\n[33mGit Setup\n–––––––––[0m\n";
-
-		//Create folder for Bare Repo
-		echo "Creating Bare Repository ... ";
-		$gitDir = "/home/vagrant/" . $name . ".git";
-		if (!is_dir($gitDir)) {
-			mkdir($gitDir, 0755);
-		}
-		chown($gitDir, "vagrant");
-		chgrp($gitDir, "vagrant");
-
-		//Create Bare Repo
-		chdir("/home/vagrant/" . $name . ".git");
-		exec("sudo -u vagrant git init --bare");
-		echo "[36mOK[0m\n";
-
-		//Create Site's Repo
-		echo "Creating Repo in Sites Directory ... ";
-		chdir("/var/www/web/" . $name. "/htdocs");
-		exec("sudo -u vagrant git init");
-
-		//Link Both Repos
-		exec("sudo -u vagrant git remote add origin " . $gitDir);
-		echo "[36mOK[0m\n";
-
-		//Add the two hooks (pre-receive & post-receive)
-		echo "Adding Hooks ... ";
-		$preh = fopen($gitDir . "/hooks/pre-receive", "w");
-		$prf = getPreHook();
-		fwrite($preh, $prf);
-		fclose($preh);
-
-		$posth = fopen($gitDir . "/hooks/post-receive", "w");
-		$prf = getPostHook($name);
-		fwrite($posth, $prf);
-		fclose($posth);
-
-		//Set permission to executable on both hooks
-		chmod($gitDir . "/hooks/pre-receive", 0775);
-		chown($gitDir . "/hooks/pre-receive", "vagrant");
-		chgrp($gitDir . "/hooks/pre-receive", "vagrant");
-
-		chmod($gitDir . "/hooks/post-receive", 0775);
-		chown($gitDir . "/hooks/post-receive", "vagrant");
-		chgrp($gitDir . "/hooks/post-receive", "vagrant");
-
-		echo "[36mOK[0m\n";
-
-	}
-
 	//Function to display IP address of current VM for hosts purposes
 	function printHostsInfo($name){
 		echo "To get started, add the following record to your [95mHOSTS[0m file: ([95m/etc/hosts[0m)\n\n";
@@ -246,12 +191,6 @@ LOGO;
 		$start = strpos($ipstr, "inet") + 5;
 		$length = (strpos($ipstr, "/", $start)) - $start;
 		return substr($ipstr, $start, $length);
-	}
-
-	//Function to display the GIT remote address
-	function printGitInfo($name){
-		echo "\nAnd add this server to your [95mGIT[0m repository:\n\n";
-		echo "     git remote add staging ssh://vagrant@" . $name . ".dev:2222/home/vagrant/" . $name . ".git\n";
 	}
 
 	//Function to display MySQL connection info
@@ -405,52 +344,6 @@ if (!defined('__PREPEND_INITED')) {
 }
 
 FPMPREPEND;
-	}
-
-	//function to return pre-receive hook
-	function getPreHook(){
-		return <<<PREHOOK
-#!/usr/bin/php
-<?php
-echo "[33mStep1: Updating repository[0m \\n";
-?>
-PREHOOK;
-	}
-
-	//function to return post-receive hook
-	function getPostHook($name){
-		return <<<POSTHOOK
-#!/usr/bin/php
-<?php
-
-require("/home/vagrant/PHP-GIT-Hooks/Codestaq/PHook.php");
-use Codestaq\PHook;
-
-\$ph = new PHook;
-
-\$ph->clear(" -> ")->cyan("OK")->withoutACommand();
-
-\$ph->say("Step2: Deploying")
-	->thenRun(function(){
-		\$git = "git --git-dir=/var/www/web/$name/htdocs/.git/ --work-tree=/var/www/web/$name/htdocs/";
-		exec("\$git fetch -q origin");
-		exec("\$git reset --hard origin/master");
-	})
-	->clear("\n -> ")->plain("")->andFinallySay("OK");
-
-\$ph->onTrigger("[trigger:composer]")
-	->say("Step3: Composer Hook")->clear("\n -> Triggering install - get a ")->cyan("coffee")
-	->thenRun(function(){
-		chdir("/var/www/web/$name/htdocs");
-		putenv("GIT_DIR");
-		exec("composer update");
-	})
-	->clear("\n -> ")->plain("")->andFinallySay("OK");
-
-\$ph->say(">> All Done <<")->withoutACommand();
-
-POSTHOOK;
-
 	}
 
 ?>
