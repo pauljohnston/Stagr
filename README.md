@@ -1,6 +1,6 @@
 Stagr
 =====
 
-###Staging server setup for Fortrabbit.
+###Local development server setup for Fortrabbit.
 
-Check back for updates, big things are comming. 
+Forked from [Stagr](https://github.com/gmanricks/Stagr) and modified to work as a local fortrabbit environment.
