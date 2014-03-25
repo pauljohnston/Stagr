@@ -16,6 +16,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		puppet.manifest_file = "fortrabbit.pp"
 		puppet.options = ["--templatedir", "/vagrant/templates"]
 	end
-	# synced folder settings
-	config.vm.synced_folder "web", "/var/www/web"
+	# synced folders
+	require 'yaml'
+	sfile = YAML::load_file("vagrant_synclist.yml")
+	@sfolders = sfile["Synced_folder_list"]
+
+	@sfolders.each do |item|
+	  config.vm.synced_folder item[1]['host'], item[1]['guest']
+	end
 end

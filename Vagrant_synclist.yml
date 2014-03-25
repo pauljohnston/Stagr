@@ -1,0 +1,7 @@
+"Synced_folder_list":
+    "main":
+        "host": 'web'
+        "guest": '/var/www/web'
+    "example":
+        "host": '~/Wip/Sites/burn-it/example.co'
+        "guest": '/var/www/web/example/htdocs'

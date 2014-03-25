@@ -171,9 +171,9 @@ LOGO;
 
 	//Function to display IP address of current VM for hosts purposes
 	function printHostsInfo($name){
-		echo "To get started, add the following record to your [95mHOSTS[0m file: ([95m/etc/hosts[0m)\n\n";
-                echo "     " . str_pad("127.0.0.1", 15) . "   " . $name . ".dev\n";
-                echo "\nYou can then access your site at: [95mhttp://" . $name . ".dev:8080/[0m\n";
+		echo "To get started, forward your app traffic to the guest machine [95m(Run on the host machine)[0m)\n\n";
+                echo "     echo 8080 > ~/.pow/" . $name . "\n";
+                echo "\nYou can then access your site at: [95mhttp://" . $name . ".dev[0m\n";
 	}
 
 	//Helper function to get IP's
