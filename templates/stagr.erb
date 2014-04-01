@@ -245,7 +245,7 @@ FastCgiExternalServer /var/www/web/$name/redir/php -socket /var/fpm/socks/$name.
 <VirtualHost *:80>
 	ServerAdmin $email
 	ServerName $name.dev
-	ServerAlias *.$name.dev
+	ServerAlias *.$name.dev *.$name.*.xip.io
 	DocumentRoot /var/www/web/$name/htdocs/public
 
 	SetEnv APP_NAME "$name"
