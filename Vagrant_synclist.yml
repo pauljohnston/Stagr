@@ -3,5 +3,5 @@
         "host": 'web'
         "guest": '/var/www/web'
 #    "example":
-#        "host": '~/Sites/burn-it/example.co'
+#        "host": '~/Sites/example/example.co'
 #        "guest": '/var/www/web/example/htdocs'
