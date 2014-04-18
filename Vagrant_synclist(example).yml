@@ -2,6 +2,6 @@
     "main":
         "host": 'web'
         "guest": '/var/www/web'
-    "example":
-        "host": '~/Wip/Sites/Example/example.co'
-        "guest": '/var/www/web/example/htdocs'
+#    "example":
+#        "host": '~/Wip/Sites/Example/example.co'
+#        "guest": '/var/www/web/example/htdocs'
