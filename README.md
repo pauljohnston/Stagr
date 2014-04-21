@@ -9,26 +9,32 @@ Forked from [Stagr](https://github.com/gmanricks/Stagr) and modified to work as 
 
 ### Installation
 
-**Step 1: Install Pow**<br>
+**Step 1: Install VirtualBox**<br>
+*[https://www.virtualbox.org/wiki/Downloads](https://www.virtualbox.org/wiki/Downloads)*
+
+**Step 2: Install Vagrant**<br>
+*[http://www.vagrantup.com/downloads.html](http://www.vagrantup.com/downloads.html)*
+
+**Step 3: Install Pow**<br>
 *curl get.pow.cx | sh*
 
-**Step 2: Clone Repo**<br>
+**Step 4: Clone Repo**<br>
 *git clone https://github.com/pauljohnston/Stagr.git*
 
-**Step 3: Enter the Directory**<br>
+**Step 5: Enter the Directory**<br>
 *cd Stagr*
 
-**Step 4: Copy and rename synclist**<br>
+**Step 6: Copy and rename synclist**<br>
 *Copy and rename 'Vagrant_synclist(example).yml' to 'Vagrant_synclist.yml'*
 
-**Step 5: Run Vagrant**<br>
+**Step 7: Run Vagrant**<br>
 *vagrant up*
 
 
 ### Adding a site
 
 **Step 1: Add your site to Vagrant_synclist.yml**<br>
-*see example in YAML file*
+*see example in YAML file* **(Ensure spaces are used and not tabs)**
 
 **Step 2: forward app traffic to vagrant**<br>
 *echo 8080 > ~/.pow/example*
