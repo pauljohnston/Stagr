@@ -25,7 +25,7 @@ Forked from [Stagr](https://github.com/gmanricks/Stagr) and modified to work as 
 *cd Stagr*
 
 **Step 6: Copy and rename synclist**<br>
-*Copy and rename 'Vagrant_synclist(example).yml' to 'Vagrant_synclist.yml'*
+*cp 'Vagrant_synclist(example).yml' 'Vagrant_synclist.yml'*
 
 **Step 7: Run Vagrant**<br>
 *vagrant up*
